@@ -1,8 +1,8 @@
 class WelcomeController < ApplicationController
   layout :resolve_layout
-  
+
   def welcome
-  
+
   end
 
   def rider
@@ -22,10 +22,8 @@ class WelcomeController < ApplicationController
     when "index"
       "administration"
     else
-      false
+      "application"
     end
   end
 
 end
-
-
