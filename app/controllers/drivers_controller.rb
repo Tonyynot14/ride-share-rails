@@ -6,6 +6,7 @@ class DriversController < ApplicationController
 
   def show
     @driver = Driver.find(params[:id])
+    @vehicle = Vehicle.all
     @location_ids = LocationRelationship.where(driver_id: params[:id]).ids
     @locations = Location.where(id: @location_ids)
 
@@ -13,10 +14,23 @@ class DriversController < ApplicationController
 
   def index
     @drivers = Driver.all
+    @vehicle = Vehicle.all
   end
 
   def create
     @driver = Driver.new(driver_params)
+    #Uncomment these so you know the password created
+    #and comment out below lines
+    #@driver.password = "password"
+    #@driver.password_confirmation = "password"
+   # Random password generator for driver,
+   # so that admin does not know password
+
+    generated_password = Devise.friendly_token.first(8)
+    @driver.password = generated_password
+    @driver.password_confirmation = generated_password
+    @driver.organization_id = current_user.organization_id
+
     if @driver.save
       redirect_to @driver
     else

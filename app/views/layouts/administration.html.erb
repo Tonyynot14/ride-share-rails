@@ -38,26 +38,17 @@
     </ul>
     <div><% if user_signed_in? %>
       Logged in as <strong><%= current_user.email %></strong>.
-      
+
       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
     <% else %>
-      
+
       <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
     <% end %>
     </div>
   </div>
 </nav>
 
-    <!-- <p class=" navbar navbar-text pull-right">
-    <% if organization_signed_in? %>
-      Logged in as <strong><%= current_organization.email %></strong>.
-      <%= link_to 'Edit profile', edit_organization_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_organization_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% else %>
-      <%= link_to "Sign up", new_organization_registration_path, :class => 'navbar-link'  %> |
-      <%= link_to "Login", new_organization_session_path, :class => 'navbar-link'  %>
-    <% end %>
-    </p> -->
+    
 
 
     <% if notice %>

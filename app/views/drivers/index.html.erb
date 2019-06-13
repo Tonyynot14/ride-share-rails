@@ -13,23 +13,27 @@
       <th scope="col">Car Make</th>
       <th scope="col">Car Model</th>
       <th scope="col">Car Color</th>
+      <th scope="col">Car Year</th>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
 
     <% @drivers.each do |driver| %>
-      <% if driver.organization.name==current_organization.name%>
+      <% if driver.organization.id==current_user.organization_id%>
         <tr>
           <td scope="row"><%= driver.id %></td>
           <td><%= driver.first_name %></td>
           <td><%= driver.last_name %></td>
           <td><%= driver.phone %></td>
           <td><%= driver.email %></td>
-          <td><%= driver.car_make %></td>
-          <td><%= driver.car_model %></td>
-          <td><%= driver.car_color %></td>
-          <td><%= link_to 'Show', driver_path(driver) %></td>
+          <%driver.vehicles.each do |vehicle|%>
+            <td><%= vehicle.car_make %></td>
+            <td><%= vehicle.car_model %></td>
+            <td><%= vehicle.car_color %></td>
+            <td><%= vehicle.car_year %></td>
+          <%end%>
+          <td><%= link_to 'Show', driver_path(driver) %> </td>
           <td><%= link_to 'Edit', edit_driver_path(driver) %></td>
           <td><%= link_to 'Destroy', driver_path(driver),
                           method: :delete,

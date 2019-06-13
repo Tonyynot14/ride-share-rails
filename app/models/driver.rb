@@ -7,6 +7,7 @@ class Driver < ApplicationRecord
   belongs_to :organization
   has_many :rides
   has_many :schedule_windows
+  has_many :vehicles ,dependent: :destroy
 
 
   devise :database_authenticatable, :registerable,

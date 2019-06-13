@@ -5,17 +5,33 @@ module Api
 
       helpers SessionHelpers
 
-
-      before do
-        error!('Unauthorized', 401) unless require_login!
+      #Method to Create a Driver using api calls
+      desc "Create a Driver"
+      params do
+        requires :driver, type: JSON do
+          requires :email , type:String
+          requires :password, type:String
+          requires :first_name, type: String
+          requires :last_name, type: String
+          requires :phone, type: String
+          requires :organization_id, type: Integer
+          requires :is_active , type: Boolean
+          optional :radius, type: Integer
+        end
       end
+      post "drivers" do
+        driver = Driver.new
+        driver.attributes= (params[:driver])
+        if driver.save
+          status 200
+          render driver: driver
+        #Return bad request error code and error
+        else
+          status 400
+          render json: driver.errors
 
-
-
-    # desc "Return all drivers"
-    # get "/drivers/all", root: :driver do
-    #   Driver.all
-    # end
+        end
+      end
 
 
 
@@ -30,20 +46,29 @@ module Api
         location_ids.each do |id|
           locations.push(Location.where(id: id))
         end
-        return driver
+        render driver: driver
         #render json: {"driver": driver, "location": locations}
       end
 
 
       desc "Update a driver with a given id"
       params do
+        requires :driver, type: JSON do
+          optional  :email , type:String
+          optional :password, type:String
+          optional :first_name, type: String
+          optional :last_name, type: String
+          optional :phone, type: String
+          optional :is_active , type: Boolean
+          optional :radius, type: Integer 
+        end
       end
       put "drivers" do
         driver = current_driver
-        driver.update(first_name: params[:first_name], last_name: params[:last_name], phone: params[:phone],
-                      email: params[:email], car_make: params[:car_make], car_model: params[:car_model],
-                      car_color: params[:car_color], radius: params[:radius], is_active: params[:is_active])
-        return current_driver
+        driver.attributes= (params[:driver])
+        if driver.save
+          render current_driver
+        end
       end
 
 

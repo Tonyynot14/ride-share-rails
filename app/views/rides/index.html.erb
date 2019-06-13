@@ -16,7 +16,7 @@
   </tr>
 
   <% @rides.each do |ride| %>
-    <% if ride.organization.name==current_organization.name%>
+    <% if ride.rider==current_rider%>
     <tr>
       <td scope="row"><%= ride.id %></td>
       <td><%= ride.rider_id %></td>

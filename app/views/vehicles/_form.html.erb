@@ -1,0 +1,92 @@
+<%= form_with(model: [@driver,@vehicle]) do  |form| %>
+
+  <% if @vehicle.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@vehicle.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @vehicle.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+
+
+    <div class="form-group offset-md-1 col-md-5 ">
+      <%= form.label :car_make %><br>
+      <%= form.text_field :car_make,class: "form-control" %>
+    </div >
+
+    <div class="form-group col-md-5">
+      <%= form.label :car_model %><br>
+      <%= form.text_field :car_model,class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group offset-md-1 col-md-5">
+      <%= form.label :car_year %><br>
+      <%= form.select :car_year,options_for_select((2000..2020).step(1)),class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-5">
+      <%= form.label :car_color %><br>
+      <%= form.text_field :car_color,class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group offset-md-1 col-md-5">
+      <%= form.label :car_plate %><br>
+      <%= form.text_field :car_plate,class: "form-control" %>
+    </div>
+
+  
+  </div>
+
+  <div class="row">
+    <div class="form-group offset-md-1 col-md-5">
+      <%= form.label :insurance_provider %><br>
+      <%= form.text_field :insurance_provider,class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-5">
+      <%= form.label :seat_belt_num, "Number of Seat Belts" %><br>
+      <%= form.select :seat_belt_num,options_for_select((1..10).step(1)),class: "form-control" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group offset-md-1 col-md-5">
+      <%= form.label :insurance_start %><br>
+      <%= form.date_select :insurance_start,
+       order: [:month,:day,:year],class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-5">
+      <%= form.label :insurance_stop %><br>
+      <%= form.date_select :insurance_stop,
+       order: [:month,:day,:year],class: "form-control" %>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="row">
+    <div  class="form-group col-md-1 offset-md-1">
+      <%= link_to 'Back', drivers_path,class:"btn btn-danger" %>
+    </div>
+    <div  class="form-group col-md-1 offset-md-7">
+      <%= form.submit class:"btn btn-primary" %>
+    </div>
+  </div>
+
+<% end %>

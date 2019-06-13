@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_16_203244) do
+ActiveRecord::Schema.define(version: 2019_06_11_152517) do
+
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +22,6 @@ ActiveRecord::Schema.define(version: 2019_05_16_203244) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone"
-    t.string "car_make"
-    t.string "car_model"
-    t.string "car_color"
     t.integer "radius", default: 50
     t.boolean "is_active", default: true
     t.string "email", default: "", null: false
@@ -34,6 +33,8 @@ ActiveRecord::Schema.define(version: 2019_05_16_203244) do
     t.datetime "updated_at", null: false
     t.string "auth_token"
     t.datetime "token_created_at"
+    t.boolean "background_check"
+    t.string "application_state"
     t.index ["auth_token", "token_created_at"], name: "index_drivers_on_auth_token_and_token_created_at"
     t.index ["organization_id"], name: "index_drivers_on_organization_id"
   end
@@ -62,13 +63,12 @@ ActiveRecord::Schema.define(version: 2019_05_16_203244) do
 
   create_table "organizations", force: :cascade do |t|
     t.string "name"
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
   end
 
   create_table "recurring_patterns", force: :cascade do |t|
@@ -161,6 +161,22 @@ ActiveRecord::Schema.define(version: 2019_05_16_203244) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.bigint "driver_id"
+    t.string "car_make"
+    t.string "car_model"
+    t.string "car_color"
+    t.integer "car_year"
+    t.string "car_plate"
+    t.integer "seat_belt_num"
+    t.string "insurance_provider"
+    t.date "insurance_start"
+    t.date "insurance_stop"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_vehicles_on_driver_id"
   end
 
 end
